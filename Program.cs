@@ -17,12 +17,14 @@ namespace Core
     public class Game
     {
         private GameMap map;
+
         public Game(string[,] area)
         {
             map = new(area);
 
             Init();
         }
+
         private void Init()
         {
             map.View();
