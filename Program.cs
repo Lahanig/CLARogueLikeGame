@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using CLARogueLikeGame.models.Entity;
+using Core;
 
 string[,] gameMap = new string[,]
 {
@@ -17,6 +18,7 @@ namespace Core
     public class Game
     {
         private GameMap map;
+        Entity entity = new();
 
         public Game(string[,] area)
         {
@@ -37,6 +39,7 @@ namespace Core
             {
                 Console.Clear();
                 map.View();
+                entity.Print();
                 key = Console.ReadKey();
                 Console.WriteLine("\\Quit game");
 
