@@ -1,5 +1,4 @@
-﻿using CLARogueLikeGame.models.Entity;
-using Core;
+﻿using CLARogueLikeGame.Models;
 
 string[,] gameMap = new string[,]
 {
@@ -11,49 +10,54 @@ string[,] gameMap = new string[,]
 };
 
 Game game = new(gameMap);
-game.Loop();
+game.Init();
 
 namespace Core
 {
     public class Game
     {
         private GameMap map;
-        Entity entity = new();
+        private Player player = new();
 
         public Game(string[,] area)
         {
             map = new(area);
-
-            Init();
         }
 
-        private void Init()
+        public void Init()
         {
             map.View();
+
+            Loop();
         }
 
         public void Loop()
         {
-            ConsoleKeyInfo key;
             while (true)
             {
-                Console.Clear();
-                map.View();
-                entity.Print();
-                key = Console.ReadKey();
-                Console.WriteLine("\\Quit game");
+                Update();
+                Draw();
 
-                if (key.Key != ConsoleKey.Escape)
-                {
-                    map.area[2, 4] = key.KeyChar.ToString();
-                }
-                else return;
-
-                if (key.Key == ConsoleKey.R)
-                {
-                    map.ToDefault();
-                }
+                if (player.currentKey.Key == ConsoleKey.Escape) return;
             }
+        }
+
+        private void Update()
+        {
+            player.Update();
+        }
+
+        private void Draw()
+        {
+            Console.Clear();
+
+            player.Print();
+            player.Draw("P");
+
+            map.area[player.y, player.x] = player.texture;
+
+            map.View();
+            map.ToDefault();
         }
     }
 
