@@ -1,4 +1,5 @@
 ﻿using CLARogueLikeGame.Models;
+using System.Xml.Linq;
 
 Game.Init();
 
@@ -6,6 +7,7 @@ namespace Core
 {
     public static class Game
     {
+        public static GameTimer timer = new();
         public static GameMap map = new(new string[,]
         {
             {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" },
@@ -33,7 +35,10 @@ namespace Core
             while (true)
             {
                 Update();
-                Draw();
+                if (timer.Timer(5300) == true)
+                {
+                    Draw();
+                }
 
                 if (player.currentKey.Key == ConsoleKey.Escape) return;
             }
@@ -115,6 +120,32 @@ namespace Core
                     if (area[i, j] != "|" && area[i, j] != "=") area[i, j] = " ";
                 }
             }
+        }
+    }
+
+    public struct GameTimer
+    {
+        public int time;
+        public bool isTimeOut = false;
+
+        public GameTimer() 
+        {
+            time = 0;
+        }
+
+        public bool Timer(int timeOut = 40) 
+        {
+            time++;
+
+            if (time > timeOut)
+            {
+                time = 0;
+                isTimeOut = true;
+                return true;
+            }
+
+            isTimeOut = false;
+            return false;
         }
     }
 }

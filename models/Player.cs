@@ -20,40 +20,43 @@
 
         public void Update()
         {   
-            currentKey = Console.ReadKey(true);
-
-            if (currentKey.Key != ConsoleKey.Escape)
+            if (Console.KeyAvailable) 
             {
-                texture = currentKey.KeyChar.ToString();
-            }
-            else
-            {
-                Console.WriteLine("\\Quit game");
-                return;
-            }
+                currentKey = Console.ReadKey(true);
 
-            switch (currentKey.Key)
-            {
-                case ConsoleKey.W:
-                    if (Game.map.area[y - 1, x] != "=") y--;
-                    diraction = "top";
-                    break;
-                case ConsoleKey.S:
-                    if (Game.map.area[y + 1, x] != "=") y++;
-                    diraction = "down";
-                    break;
-                case ConsoleKey.A:
-                    if (Game.map.area[y, x - 1] != "|") x--;
-                    diraction = "left";
-                    break;
-                case ConsoleKey.D:
-                    if (Game.map.area[y, x + 1] != "|") x++;
-                    diraction = "right";
-                    break;
-            }
+                if (currentKey.Key != ConsoleKey.Escape)
+                {
+                    texture = currentKey.KeyChar.ToString();
+                }
+                else
+                {
+                    Console.WriteLine("Quit game");
+                    return;
+                }
 
-            collisionRay.diraction = diraction;
-            collisionRay.SetPosition(x, y);
+                switch (currentKey.Key)
+                {
+                    case ConsoleKey.W:
+                        if (Game.map.area[y - 1, x] != "=") y--;
+                        diraction = "top";
+                        break;
+                    case ConsoleKey.S:
+                        if (Game.map.area[y + 1, x] != "=") y++;
+                        diraction = "down";
+                        break;
+                    case ConsoleKey.A:
+                        if (Game.map.area[y, x - 1] != "|") x--;
+                        diraction = "left";
+                        break;
+                    case ConsoleKey.D:
+                        if (Game.map.area[y, x + 1] != "|") x++;
+                        diraction = "right";
+                        break;
+                }
+
+                collisionRay.diraction = diraction;
+                collisionRay.SetPosition(x, y);
+            }
         }
     }
 
