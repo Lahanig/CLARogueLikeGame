@@ -1,37 +1,34 @@
 ﻿using CLARogueLikeGame.Models;
 
-string[,] gameMap = new string[,]
-{
-    {"|", "=", "=", "=", "=", "=", "=", "=", "|" },
-    {"|", " ", " ", " ", " ", " ", " ", " ", "|" },
-    {"|", " ", " ", " ", " ", " ", " ", " ", "|" },
-    {"|", " ", " ", " ", " ", " ", " ", " ", "|" },
-    {"|", "=", "=", "=", "=", "=", "=", "=", "|" }
-};
-
-Game game = new(gameMap);
-game.Init();
+Game.Init();
 
 namespace Core
 {
-    public class Game
+    public static class Game
     {
-        private GameMap map;
-        private Player player = new();
-
-        public Game(string[,] area)
+        public static GameMap map = new(new string[,]
         {
-            map = new(area);
-        }
+            {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" }
+        });
 
-        public void Init()
+        private static Player player = new();
+
+        public static void Init()
         {
-            map.View();
-
+            Draw();
             Loop();
         }
 
-        public void Loop()
+        public static void Loop()
         {
             while (true)
             {
@@ -42,12 +39,12 @@ namespace Core
             }
         }
 
-        private void Update()
+        private static void Update()
         {
             player.Update();
         }
 
-        private void Draw()
+        private static void Draw()
         {
             Console.Clear();
 
@@ -59,9 +56,19 @@ namespace Core
             map.View();
             map.ToDefault();
         }
+
+        public static bool Collision() 
+        {
+            switch (map.area[player.collisionRay.y, player.collisionRay.x])
+            {
+                case " ":
+                    return false;
+                default: return true;
+            }
+        }
     }
 
-    internal struct GameMap
+    public struct GameMap
     {
         public string[,] area;
         public int rows, columns;
@@ -75,17 +82,25 @@ namespace Core
 
         public void View()
         {
-            rows = area.GetUpperBound(0) + 1;
-            columns = area.Length / rows;
-
-            for (int i = 0; i < rows; i++)
+            try
             {
-                for (int j = 0; j < columns; j++)
+                rows = area.GetUpperBound(0) + 1;
+                columns = area.Length / rows;
+
+                for (int i = 0; i < rows; i++)
                 {
-                    Console.Write(area[i, j]);
+                    for (int j = 0; j < columns; j++)
+                    {
+                        Console.Write(area[i, j]);
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
+            catch (Exception)
+            {
+                Console.WriteLine("Error");
+            }
+            
         }
 
         public void ToDefault()
