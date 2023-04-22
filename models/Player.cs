@@ -5,17 +5,22 @@
         private string diraction = "left";
         public PlayerCollisionRay collisionRay;
         public ConsoleKeyInfo currentKey;
+        public static int money = 0;
 
         public Player() : base()
         {
             collisionRay = new(x, y, diraction);
+            texture = "P";
+            type = "Player";
         }
 
         public override void Print()
         {
             Console.WriteLine($"Debug log: \n" +
                 $"Player x: {x}, y: {y}, diraction: {diraction}, collision ray x: {collisionRay.x}, y: {collisionRay.y}, diraction: {collisionRay.diraction}" +
-            $"");
+            $"\n");
+
+            Console.WriteLine($"Money: {money} \n");
         }
 
         public void Update()

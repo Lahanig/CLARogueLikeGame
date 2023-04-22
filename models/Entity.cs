@@ -1,14 +1,15 @@
 ﻿namespace CLARogueLikeGame.Models
 {
-    internal abstract class Entity
+    public abstract class Entity
     {
-        internal int x; internal int y;
-        internal string texture;
+        internal int x, y;
+        internal string texture, type;
 
         public Entity()
         {
             x = 2; y = 2;
             texture = "E";
+            type = "Entity";
         }
 
         public virtual void Print()
@@ -19,6 +20,11 @@
         public virtual void Draw(string texture)
         {
             this.texture = texture;
+        }
+
+        public virtual void Collision() 
+        {
+            Console.WriteLine("Collision!");
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using CLARogueLikeGame.Models;
-using System.Xml.Linq;
+﻿using CLARogueLikeGame.GameTypes;
+using CLARogueLikeGame.Models;
 
 Game.Init();
 
@@ -7,8 +7,9 @@ namespace Core
 {
     public static class Game
     {
-        public static GameTimer timer = new();
-        public static GameMap map = new(new string[,]
+        internal static GameEntites entites = new();
+        internal static GameTimer timer = new();
+        internal static GameMap map = new(new string[,]
         {
             {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" },
             {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
@@ -26,6 +27,7 @@ namespace Core
 
         public static void Init()
         {
+            entites.AddEntity(new Coin());
             Draw();
             Loop();
         }
@@ -56,96 +58,42 @@ namespace Core
             player.Print();
             player.Draw("P");
 
+            try
+            {
+                foreach (Entity entity in entites.entitesList)
+                {
+                    map.area[entity.y, entity.x] = entity.texture;
+
+                    Collision(entity);
+                }
+            }
+            catch (System.InvalidOperationException)
+            {
+                foreach (Entity entity in entites.entitesList)
+                {
+                    map.area[entity.y, entity.x] = entity.texture;
+
+                    Collision(entity);
+                }
+            }
+
             map.area[player.y, player.x] = player.texture;
 
             map.View();
             map.ToDefault();
         }
 
-        public static bool Collision() 
+        public static void Collision(Entity entity) 
         {
-            switch (map.area[player.collisionRay.y, player.collisionRay.x])
+            int Ex = entity.x;
+            int Ey = entity.y;
+            int Px = player.x;
+            int Py = player.y;
+
+            if ((Px == Ex) && (Py == Ey))
             {
-                case " ":
-                    return false;
-                default: return true;
-            }
+                entity.Collision();
+            };
         }
-    }
-
-    public struct GameMap
-    {
-        public string[,] area;
-        public int rows, columns;
-        public GameMap(string[,] map)
-        {
-            area = map;
-
-            rows = area.GetUpperBound(0) + 1;
-            columns = area.Length / rows;
-        }
-
-        public void View()
-        {
-            try
-            {
-                rows = area.GetUpperBound(0) + 1;
-                columns = area.Length / rows;
-
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        Console.Write(area[i, j]);
-                    }
-                    Console.WriteLine();
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Error");
-            }
-            
-        }
-
-        public void ToDefault()
-        {
-            rows = area.GetUpperBound(0) + 1;
-            columns = area.Length / rows;
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (area[i, j] != "|" && area[i, j] != "=") area[i, j] = " ";
-                }
-            }
-        }
-    }
-
-    public struct GameTimer
-    {
-        public int time;
-        public bool isTimeOut = false;
-
-        public GameTimer() 
-        {
-            time = 0;
-        }
-
-        public bool Timer(int timeOut = 40) 
-        {
-            time++;
-
-            if (time > timeOut)
-            {
-                time = 0;
-                isTimeOut = true;
-                return true;
-            }
-
-            isTimeOut = false;
-            return false;
-        }
-    }
+    } 
 }
