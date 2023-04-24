@@ -2,7 +2,7 @@
 {
     internal class UninitializedEntity : Entity
     {
-        public UninitializedEntity() 
+        internal UninitializedEntity(int x = 2, int y = 2) : base(x, y)
         {
             type = "UninitializedEntity";
         }

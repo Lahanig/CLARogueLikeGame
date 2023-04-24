@@ -5,9 +5,9 @@
         internal int x, y;
         internal string texture, type;
 
-        public Entity()
+        public Entity(int x = 2, int y = 2)
         {
-            x = 2; y = 2;
+            this.x = x; this.y = y;
             texture = "E";
             type = "Entity";
         }

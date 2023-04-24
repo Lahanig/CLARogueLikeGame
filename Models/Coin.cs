@@ -4,11 +4,10 @@
     {
         public int money = 5;
 
-        public Coin()
+        public Coin(int x = 2, int y = 2) : base(x, y)
         {
             texture = "C";
             type = "Coin";
-            x = 5; y = 5;
         }
 
         public override void Collision()

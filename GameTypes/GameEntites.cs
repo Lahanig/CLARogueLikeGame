@@ -11,18 +11,18 @@ namespace CLARogueLikeGame.GameTypes
             entitesList = new();
         }
 
-        public Entity GetEntity(Entity entity)
+        public Entity GetEntity(int entityX, int entityY, string entityType)
         {
-            return entity.type switch
+            return entityType switch
             {
-                "Coin" => new Coin(),
-                _ => new UninitializedEntity(),
+                "Coin" => new Coin(entityX, entityY),
+                _ => new UninitializedEntity(entityX, entityY),
             };
         }
 
-        public void AddEntity(Entity entity)
+        public void AddEntity(int entityX, int entityY, string entityType)
         {
-            entity = GetEntity(entity);
+            Entity entity = GetEntity(entityX, entityY, entityType);
             entitesList.Add(entity);
         }
     }
