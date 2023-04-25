@@ -6,7 +6,7 @@ Game.Init();
 
 namespace Core
 {
-    public static class Game
+    internal static class Game
     {
         internal static GameEntites entites = new();
         internal static GameTimer timer = new();
@@ -28,19 +28,33 @@ namespace Core
         private static Player player = new();
 
         //Game entry point
-        public static void Init()
+        internal static void Init()
         {
-            foreach (GameMapTemplateEntity rawEntity in new GameMapTemplate1().GetEntitesList())
-            {
-                entites.AddEntity(rawEntity.x, rawEntity.y, rawEntity.type);
-            }
-
+            RandomizeGameMapTemplate();
             Draw();
             Loop();
         }
 
+        internal static void RandomizeGameMapTemplate()
+        {
+            List<GameMapTemplate> gameMapTemplates = new()
+            {
+                new GameMapTemplate1(),
+                new GameMapTemplate2(),
+            };
+
+            Random rnd = new();
+            int tempGameMapTemplateID = rnd.Next(0, gameMapTemplates.Count);
+
+            //Adds to the list of game entities, entities from a random template 
+            foreach (GameMapTemplateEntity rawEntity in gameMapTemplates[tempGameMapTemplateID].GetEntitesList())
+            {
+                entites.AddEntity(rawEntity.x, rawEntity.y, rawEntity.type);
+            }
+        }
+
         //Main game loop
-        public static void Loop()
+        private static void Loop()
         {
             while (true)
             {

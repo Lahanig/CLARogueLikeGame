@@ -1,12 +1,12 @@
 ﻿namespace CLARogueLikeGame.GameMapTemplates
 {
-    internal class GameMapTemplate1 : IGameMapTemplate
+    internal class GameMapTemplate1 : GameMapTemplate, IGameMapTemplate
     {
-        private readonly List<GameMapTemplateEntity> EntitiesList = new() {
-            new GameMapTemplateEntity (5, 5, "Coin"), new GameMapTemplateEntity (16, 8, "Coin")
-        };
-        List<GameMapTemplateEntity> IGameMapTemplate.GameMapTemplateEntities { get => EntitiesList; }
-
-        public List<GameMapTemplateEntity> GetEntitesList() => EntitiesList;
+        internal GameMapTemplate1()
+        {
+            EntitiesList = new() {
+                new GameMapTemplateEntity (5, 5, "Coin"), new GameMapTemplateEntity (16, 8, "Coin")
+            };
+        }
     }
 }
