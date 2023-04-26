@@ -1,11 +1,16 @@
-﻿namespace CLARogueLikeGame.Models
+﻿using System.Runtime.CompilerServices;
+
+namespace CLARogueLikeGame.Models
 {
     internal class Player : Entity
     {
-        private string diraction = "left";
-        public PlayerCollisionRay collisionRay;
-        public ConsoleKeyInfo currentKey;
-        public static int money = 0;
+        private new string diraction = "left";
+        internal PlayerCollisionRay collisionRay;
+        internal ConsoleKeyInfo currentKey;
+        internal static int money = 0;
+        internal static new int x = 2;
+        internal static new int y = 2;
+        internal static bool isBlockMoving = false;
 
         public Player() : base()
         {
@@ -25,7 +30,7 @@
 
         public void Update()
         {   
-            if (Console.KeyAvailable) 
+            if (Console.KeyAvailable && isBlockMoving == false) 
             {
                 currentKey = Console.ReadKey(true);
 

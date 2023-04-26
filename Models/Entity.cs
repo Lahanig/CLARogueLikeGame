@@ -3,13 +3,14 @@
     public abstract class Entity
     {
         internal int x, y;
-        internal string texture, type;
+        internal string texture, type, diraction;
 
         public Entity(int x = 2, int y = 2)
         {
             this.x = x; this.y = y;
             texture = "E";
             type = "Entity";
+            diraction = "left";
         }
 
         public virtual void Print()

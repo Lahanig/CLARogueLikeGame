@@ -5,7 +5,9 @@
         internal GameMapTemplate2() 
         {
             EntitiesList = new() {
-                new GameMapTemplateEntity (10, 8, "Coin"), new GameMapTemplateEntity (8, 8, "Coin")
+                new GameMapTemplateEntity (11, 8, "Coin"),
+                new GameMapTemplateEntity (9, 8, "Coin"),
+                new GameMapTemplateEntity (9, 10, "Door", "bottom")
             };
         }
     }

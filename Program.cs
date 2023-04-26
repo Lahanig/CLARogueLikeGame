@@ -10,19 +10,20 @@ namespace Core
     {
         internal static GameEntites entites = new();
         internal static GameTimer timer = new();
-        //Make 16x8 area (ignoring the walls)
+        //Make 17x9 area (ignoring the walls)
         internal static GameMap map = new(new string[,]
         {
-            {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
-            {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" }
+            {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" },
+            {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" }
         });
 
         private static Player player = new();
@@ -37,6 +38,7 @@ namespace Core
 
         internal static void RandomizeGameMapTemplate()
         {
+            Player.isBlockMoving = true;
             List<GameMapTemplate> gameMapTemplates = new()
             {
                 new GameMapTemplate1(),
@@ -47,10 +49,14 @@ namespace Core
             int tempGameMapTemplateID = rnd.Next(0, gameMapTemplates.Count);
 
             //Adds to the list of game entities, entities from a random template 
+            entites.Clear();
+
             foreach (GameMapTemplateEntity rawEntity in gameMapTemplates[tempGameMapTemplateID].GetEntitesList())
             {
-                entites.AddEntity(rawEntity.x, rawEntity.y, rawEntity.type);
+                entites.AddEntity(rawEntity.x, rawEntity.y, rawEntity.type, rawEntity.diraction);
             }
+
+            Player.isBlockMoving = false;
         }
 
         //Main game loop
@@ -99,7 +105,7 @@ namespace Core
                 }
             }
 
-            map.area[player.y, player.x] = player.texture;
+            map.area[Player.y, Player.x] = player.texture;
 
             map.View();
             map.ToDefault();
@@ -109,8 +115,8 @@ namespace Core
         {
             int Ex = entity.x;
             int Ey = entity.y;
-            int Px = player.x;
-            int Py = player.y;
+            int Px = Player.x;
+            int Py = Player.y;
 
             if ((Px == Ex) && (Py == Ey))
             {
