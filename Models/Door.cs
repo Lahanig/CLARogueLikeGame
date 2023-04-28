@@ -9,7 +9,7 @@
             this.diraction = diraction??"left";
         }
 
-        public override void Collision()
+        internal override void Collision()
         {
             _ = (y == 10 || y == 0) ? Game.map.area[y, x] = "=" : Game.map.area[y, x] = "|";
 

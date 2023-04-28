@@ -1,10 +1,10 @@
 ﻿namespace CLARogueLikeGame.GameTypes
 {
-    internal struct GameMap
+    internal class GameMap
     {
-        public string[,] area;
-        public int rows, columns;
-        public GameMap(string[,] map)
+        internal string[,] area;
+        internal int rows, columns;
+        internal GameMap(string[,] map)
         {
             area = map;
 
@@ -12,7 +12,7 @@
             columns = area.Length / rows;
         }
 
-        public void View()
+        internal void View()
         {
             try
             {
@@ -35,7 +35,7 @@
 
         }
 
-        public void ToDefault()
+        internal void ToDefault()
         {
             rows = area.GetUpperBound(0) + 1;
             columns = area.Length / rows;

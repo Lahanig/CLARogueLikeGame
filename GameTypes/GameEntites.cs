@@ -2,29 +2,30 @@
 
 namespace CLARogueLikeGame.GameTypes
 {
-    internal struct GameEntites
+    internal class GameEntites
     {
-        public List<Entity> entitesList;
+        internal List<Entity> entitesList;
 
-        public GameEntites() 
+        internal GameEntites() 
         {
             entitesList = new();
         }
 
         private static Entity GetEntity(int entityX, int entityY, string entityType, string diraction) => entityType switch
         {
+            "Rock" => new Rock(entityX, entityY),
             "Door" => new Door(entityX, entityY, diraction),
             "Coin" => new Coin(entityX, entityY),
             _ => new UninitializedEntity(entityX, entityY),
         };
 
-        public void AddEntity(int entityX, int entityY, string entityType, string diraction)
+        internal void AddEntity(int entityX, int entityY, string entityType, string diraction)
         {
             Entity entity = GetEntity(entityX, entityY, entityType, diraction);
             entitesList.Add(entity);
         }
 
-        public void Clear()
+        internal void Clear()
         {
             entitesList.Clear();
         }

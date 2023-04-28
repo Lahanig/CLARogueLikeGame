@@ -8,27 +8,28 @@ namespace CLARogueLikeGame.Models
         internal PlayerCollisionRay collisionRay;
         internal ConsoleKeyInfo currentKey;
         internal static int money = 0;
+        internal static int hp = 100;
         internal static new int x = 2;
         internal static new int y = 2;
         internal static bool isBlockMoving = false;
 
-        public Player() : base()
+        internal Player() : base()
         {
             collisionRay = new(x, y, diraction);
             texture = "P";
             type = "Player";
         }
 
-        public override void Print()
+        internal override void Print()
         {
             Console.WriteLine($"Debug log: \n" +
                 $"Player x: {x}, y: {y}, diraction: {diraction}, collision ray x: {collisionRay.x}, y: {collisionRay.y}, diraction: {collisionRay.diraction}" +
             $"\n");
 
-            Console.WriteLine($"Money: {money} \n");
+            Console.WriteLine($"Hp: {hp} Money: {money} \n");
         }
 
-        public void Update()
+        internal void Update()
         {   
             if (Console.KeyAvailable && isBlockMoving == false) 
             {
@@ -70,18 +71,18 @@ namespace CLARogueLikeGame.Models
         }
     }
 
-    internal struct PlayerCollisionRay
+    internal class PlayerCollisionRay
     {
-        public int x; public int y;
-        public string diraction;
+        internal int x; public int y;
+        internal string diraction;
 
-        public PlayerCollisionRay(int playerX, int playerY, string playerDiraction)
+        internal PlayerCollisionRay(int playerX, int playerY, string playerDiraction)
         {
             x = playerX; y = playerY;
             diraction = playerDiraction;
         }
 
-        public void SetPosition(int playerX, int playerY)
+        internal void SetPosition(int playerX, int playerY)
         {
             x = playerX; y = playerY;
             switch (diraction) 

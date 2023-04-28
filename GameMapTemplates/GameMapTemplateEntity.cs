@@ -1,11 +1,11 @@
 ﻿namespace CLARogueLikeGame.GameMapTemplates
 {
-    internal struct GameMapTemplateEntity
+    internal class GameMapTemplateEntity
     {
-        public int x, y;
-        public string type, diraction;
+        internal int x, y;
+        internal string type, diraction;
 
-        public GameMapTemplateEntity(int x, int y, string type, string? diraction = null)
+        internal GameMapTemplateEntity(int x, int y, string type, string? diraction = null)
         {
             this.x = x;
             this.y = y;

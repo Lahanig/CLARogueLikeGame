@@ -1,16 +1,16 @@
 ﻿namespace CLARogueLikeGame.GameTypes
 {
-    internal struct GameTimer
+    internal class GameTimer
     {
-        public int time;
-        public bool isTimeOut = false;
+        internal int time;
+        internal bool isTimeOut = false;
 
-        public GameTimer()
+        internal GameTimer()
         {
             time = 0;
         }
 
-        public bool Timer(int timeOut = 40)
+        internal bool Timer(int timeOut = 40)
         {
             time++;
 

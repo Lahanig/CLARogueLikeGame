@@ -26,7 +26,7 @@ namespace Core
             {"|", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "=", "|" }
         });
 
-        private static Player player = new();
+        private static readonly Player player = new();
 
         //Game entry point
         internal static void Init()
@@ -86,6 +86,16 @@ namespace Core
             player.Print();
             player.Draw("P");
 
+            DrawEntity();
+
+            map.area[Player.y, Player.x] = player.texture;
+
+            map.View();
+            map.ToDefault();
+        }
+
+        private static void DrawEntity()
+        {
             try
             {
                 foreach (Entity entity in entites.entitesList)
@@ -97,21 +107,11 @@ namespace Core
             }
             catch (InvalidOperationException)
             {
-                foreach (Entity entity in entites.entitesList)
-                {
-                    map.area[entity.y, entity.x] = entity.texture;
-
-                    Collision(entity);
-                }
+                DrawEntity();
             }
-
-            map.area[Player.y, Player.x] = player.texture;
-
-            map.View();
-            map.ToDefault();
         }
 
-        public static void Collision(Entity entity) 
+        internal static void Collision(Entity entity) 
         {
             int Ex = entity.x;
             int Ey = entity.y;
