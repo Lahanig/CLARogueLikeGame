@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace CLARogueLikeGame.Models
+﻿namespace CLARogueLikeGame.Models
 {
     internal class Player : Entity
     {
@@ -41,7 +39,6 @@ namespace CLARogueLikeGame.Models
                 }
                 else
                 {
-                    Console.WriteLine("Quit game");
                     return;
                 }
 

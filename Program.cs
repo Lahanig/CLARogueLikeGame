@@ -53,10 +53,27 @@ namespace Core
 
             foreach (GameMapTemplateEntity rawEntity in gameMapTemplates[tempGameMapTemplateID].GetEntitesList())
             {
-                entites.AddEntity(rawEntity.x, rawEntity.y, rawEntity.type, rawEntity.diraction);
+                entites.AddEntity(rawEntity.x, rawEntity.y, rawEntity.type, rawEntity.direction);
             }
 
             Player.isBlockMoving = false;
+        }
+
+        private static void GameEnd()
+        {
+            if (Player.money >= 100)
+            {
+                Console.WriteLine("You won!");
+                return;
+            }
+
+            if (Player.hp <= 0)
+            {
+                Console.WriteLine("You lose!");
+                return;
+            }
+
+            Console.WriteLine("Game closed");
         }
 
         //Main game loop
@@ -70,7 +87,12 @@ namespace Core
                     Draw();
                 }
 
-                if (player.currentKey.Key == ConsoleKey.Escape) return;
+                if (player.currentKey.Key == ConsoleKey.Escape || Player.hp < 0) 
+                {
+                    GameEnd(); 
+
+                    return; 
+                }
             }
         }
 
